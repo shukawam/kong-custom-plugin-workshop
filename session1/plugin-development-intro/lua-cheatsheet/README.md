@@ -71,10 +71,18 @@ elseif condition then
 else
   print("no")
 end
-Variables
+```
+
+## Variables
+
+```lua
 local x = 2
 two, four = 2, 4
-Functions
+```
+
+## Functions
+
+```lua
 function myFunction()
   return 1
 end
@@ -100,7 +108,11 @@ function doAction(action, ...)
 end
 
 doAction('write', "Shirley", "Abed")
-Lookups
+```
+
+## Lookups
+
+```lua
 mytable = { x = 2, y = function() .. end }
 
 -- The same:
@@ -116,7 +128,11 @@ mytable:y(a, b)
 
 function X:y(z) .. end
 function X.y(self, z) .. end
-Metatables
+```
+
+## Metatables
+
+```lua
 mt = {}
 
 -- A metatable is simply a table with functions in it.
