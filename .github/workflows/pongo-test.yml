@@ -35,6 +35,14 @@ jobs:
         run: |
           sudo apt-get install -y luarocks
           git clone https://github.com/Kong/kong-pongo.git
+      
+      - name: Patched LuaJIT issue # ref: https://github.com/Kong/kong-pongo/issues/668
+        run: |
+          sed -i '/luarocks install busted-htest/ s#luarocks install busted-htest#luarocks install busted-htest --only-server https://raw.githubusercontent.com/rocks-moonscript-org/moonrocks-mirror/daab2726276e3282dc347b89a42a5107c3500567#' kong-pongo/assets/Dockerfile
+          sed -i '/luarocks install luacov/ s#luarocks install luacov#luarocks install luacov --only-server https://raw.githubusercontent.com/rocks-moonscript-org/moonrocks-mirror/daab2726276e3282dc347b89a42a5107c3500567#' kong-pongo/assets/Dockerfile
+          sed -i '/luarocks install kong-plugin-dbless-reload/ s#luarocks install kong-plugin-dbless-reload#luarocks install kong-plugin-dbless-reload --only-server https://raw.githubusercontent.com/rocks-moonscript-org/moonrocks-mirror/daab2726276e3282dc347b89a42a5107c3500567#' kong-pongo/assets/Dockerfile
+          
+          sed -i 's#luarocks install \$$rock .*#luarocks install \$$rock OPENSSL_DIR=\$$(OPENSSL_DIR) CRYPTO_DIR=\$$(OPENSSL_DIR) --only-server https://raw.githubusercontent.com/rocks-moonscript-org/moonrocks-mirror/daab2726276e3282dc347b89a42a5107c3500567 || exit 1;#' kong-pongo/kong-versions/3.9.0/kong/Makefile
 
       # Pongo run
       - name: Run Pongo
